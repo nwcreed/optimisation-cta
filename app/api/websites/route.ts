@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import {prisma} from '../../../lib/prisma'; // Assurez-vous que vous avez configuré Prisma
+import { prisma } from '../../../lib/prisma'; // Assurez-vous que vous avez configuré Prisma
 import { z } from 'zod';
 
 const WebsiteSchema = z.object({
@@ -44,7 +44,8 @@ export async function POST(request: Request) {
     });
 
     console.log('Website created:', newWebsite);
-    return NextResponse.json(newWebsite, { status: 201 });
+    // Renvoi de la réponse avec l'ID du site
+    return NextResponse.json({ websiteId: newWebsite.id }, { status: 201 });
 
   } catch (error) {
     console.error('Error during website creation:', error);

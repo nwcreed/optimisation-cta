@@ -82,6 +82,8 @@ model ButtonScan {
   isActive  Boolean  @default(true) 
   
   clicks      Click[]      // Relation avec les clics
+  variants    Variant[]    // Relation avec les variantes du bouton
+
 
   @@map("button_scans")
 }
@@ -91,9 +93,33 @@ model ButtonScan {
 model Click {
   id        String   @id @default(cuid())
   buttonId  String   // Référence au bouton cliqué
+  variantId String?  // Référence à la variante, il est optionnel
+
   timestamp DateTime @default(now())
 
   button    ButtonScan @relation(fields: [buttonId], references: [id])
+  variant   Variant?   @relation(fields: [variantId], references: [id])
 
   @@map("clicks")
+}
+
+
+model Variant {
+  id          String      @id @default(cuid())
+  buttonScanId String     // Référence au bouton d'origine
+  buttonScan  ButtonScan  @relation(fields: [buttonScanId], references: [id], onDelete: Cascade)
+  text        String?
+  className   String?
+  buttonId    String?
+  bgColor     String?
+  textColor   String?
+  width       Int?
+  height      Int?
+  positionX   Float?
+  positionY   Float?
+  createdAt   DateTime    @default(now())
+
+    clicks      Click[]      // Relation avec les clics
+
+  @@map("variants")
 }

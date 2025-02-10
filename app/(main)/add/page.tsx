@@ -10,6 +10,7 @@ function OnBoardingPage() {
   const [loading, setLoading] = useState(false);
   const [step, setStep] = useState(1);
   const [error, setError] = useState("");
+  const [websiteId, setWebsiteId] = useState<string | null>(null); // Ajout d'un état pour l'ID du site
   const router = useRouter();
   const { data: session } = useSession(); // Utilisation de la session pour obtenir l'utilisateur
 
@@ -33,6 +34,7 @@ function OnBoardingPage() {
       if (response.ok) {
         const data = await response.json(); // Essayez de parser la réponse JSON
         console.log("Response data:", data); // Pour vérifier la structure de la réponse
+        setWebsiteId(data.websiteId); // Assurez-vous de récupérer l'ID du site
         setLoading(false);
         setStep(2); // Passer à l'étape suivante
       } else {
@@ -102,11 +104,11 @@ function OnBoardingPage() {
               <textarea
                 className="block w-full rounded-md border-gray-300 shadow-sm sm:text-sm bg-gray-100 cursor-pointer resize-none"
                 disabled
-                value={`<script defer data-domain="${domain}" src="https://monitoryour.website/tracking-script.js"></script>`}
+                value={`<script async src="http://localhost:3000/scan.js?websiteId=${websiteId}&userId=${session?.user?.id}"></script>`}  // Modifié pour inclure websiteId et userId
               />
               <Button
                 onClick={() => {
-                  const text = `<script defer data-domain="${domain}" src="https://monitoryour.website/tracking-script.js"></script>`;
+                  const text = `<script async src="http://localhost:3000/scan.js?websiteId=${websiteId}&userId=${session?.user?.id}"></script>`; // Copie avec les params dynamiques
                   navigator.clipboard
                     .writeText(text)
                     .then(() => alert("Tracking script copied to clipboard!"))

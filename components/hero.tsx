@@ -10,17 +10,7 @@ interface ScanPageProps {
 }
 
 const Hero: React.FC<ScanPageProps> = ({ websiteId, userId }) => {
-  useEffect(() => {
-    const script = document.createElement("script");
-    script.src = `http://localhost:3000/scan.js?websiteId=1&userId=cm6bcgch50000lvb0l84o4jyk`;
-    script.async = true;
-    document.body.appendChild(script);
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, [websiteId, userId]);
-
+  
   return (
     <div className="min-h-screen w-full flex flex-col items-center justify-start bg-gradient-to-b from-blue-100 to-blue-50 antialiased relative overflow-y-auto">
       <section className="header">
@@ -110,7 +100,7 @@ const Hero: React.FC<ScanPageProps> = ({ websiteId, userId }) => {
       </div>
       </section>
       <section>
-        
+      <script async src="http://localhost:3000/scan.js?websiteId=5&userId=cm6cstz570000lv2oa51xh8y7"></script>
       </section>
     </div>
   );
